@@ -4,7 +4,6 @@ import {
   Text,
   ScrollView,
   StyleSheet,
-  TouchableOpacity,
   ActivityIndicator,
 } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
@@ -39,12 +38,7 @@ export default function WeatherScreen() {
             <Text style={[styles.greeting, { color: c.textSecondary }]}>{getGreeting()}</Text>
             <Text style={[styles.userName, { color: c.textPrimary }]}>{user?.name || 'Zulmei'}</Text>
           </View>
-          <View style={styles.headerRight}>
-            {weatherLoading && <ActivityIndicator size="small" color={c.accent} />}
-            <TouchableOpacity style={[styles.settingsBtn, { backgroundColor: c.cardBg, borderColor: c.cardBorder }]}>
-              <Text style={styles.settingsIcon}>⚙️</Text>
-            </TouchableOpacity>
-          </View>
+          {weatherLoading && <ActivityIndicator size="small" color={c.accent} />}
         </View>
 
         <View style={styles.mainWeather}>
@@ -168,11 +162,8 @@ const styles = StyleSheet.create({
   scroll: { flex: 1 },
   scrollContent: { paddingTop: 60, paddingHorizontal: 20, paddingBottom: 20 },
   header: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 32 },
-  headerRight: { flexDirection: 'row', alignItems: 'center', gap: 10 },
   greeting: { fontSize: 14, fontWeight: '400' },
   userName: { fontSize: 22, fontWeight: '700', marginTop: 2 },
-  settingsBtn: { width: 42, height: 42, borderRadius: 21, borderWidth: 1, alignItems: 'center', justifyContent: 'center' },
-  settingsIcon: { fontSize: 18 },
   mainWeather: { alignItems: 'center', marginBottom: 28 },
   locationRow: { flexDirection: 'row', alignItems: 'center', gap: 6, marginBottom: 8 },
   locationPin: { fontSize: 16 },

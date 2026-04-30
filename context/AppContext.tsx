@@ -32,6 +32,7 @@ interface AppContextType {
   login: (email: string, password: string) => Promise<void>;
   signup: (name: string, email: string, password: string) => Promise<void>;
   logout: () => Promise<void>;
+  updateName: (name: string) => Promise<void>;
   addLocation: (cityInfo: { city: string; region: string }) => void;
   removeLocation: (id: string) => void;
   setActiveLocation: (id: string) => void;
@@ -184,6 +185,15 @@ export function AppProvider({ children }: { children: ReactNode }) {
     setUser(null);
   };
 
+  const updateName = async (name: string) => {
+    const parseUser = await Parse.User.currentAsync();
+    if (parseUser) {
+      parseUser.set('name', name.trim());
+      await parseUser.save();
+    }
+    setUser((prev) => prev ? { ...prev, name: name.trim() } : prev);
+  };
+
   const addLocation = async ({ city, region }: { city: string; region: string }) => {
     const id = Date.now().toString();
     const placeholder: Location = {
@@ -226,7 +236,7 @@ export function AppProvider({ children }: { children: ReactNode }) {
         tempUnit, setTempUnit,
         theme, setTheme,
         weatherLoading, weatherError, forecastData,
-        login, signup, logout,
+        login, signup, logout, updateName,
         addLocation, removeLocation, setActiveLocation,
       }}
     >
